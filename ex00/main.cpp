@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 10:51:53 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/23 19:02:56 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/24 20:42:06 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ int	main(void)
 {
 	try
 	{
-		std::ifstream	is("test.csv", std::ios::in);
-		ExchangeRateBase	rate_base(is, "test.csv");
+		ExchangeRateBase	rate_base("test.cv");
 		
 		rate_base.head();
 	}

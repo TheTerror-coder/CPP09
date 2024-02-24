@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:43:38 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/23 19:50:43 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/24 20:43:36 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class ExchangeRateBase
 {
 	public:
 
-		ExchangeRateBase(std::ifstream& is, const std::string& filename);
+		ExchangeRateBase(const std::string& filename);
 		ExchangeRateBase(const ExchangeRateBase& other);
 		ExchangeRateBase&	operator= (const ExchangeRateBase& other);
 		~ExchangeRateBase();
@@ -40,6 +40,7 @@ class ExchangeRateBase
 		ExchangeRateBase();
 		
 		std::map<t_date,double>		database;
+		std::ifstream				istream;
 		std::string					filename;
 		std::string					line;
 		std::string					year;
@@ -49,13 +50,12 @@ class ExchangeRateBase
 		size_t						linenum;
 		std::istringstream			linestream;
 
-		void			authFileHead(std::ifstream& is);
-		void			checkDatabase(std::ifstream& is);
-		void			parseDataLine(void);
-		bool			strIsDouble(std::string str);
-		std::string		strToLower(std::string str);
-		bool			strIsInt(std::string str);
-		bool			strIsFloat(std::string str);
+		void						parseFilename(void);
+		void						openFile(void);
+		void						authFileHead(void);
+		void						checkDatabase(void);
+		void						parseDataLine(void);
+		
 };
 
 #endif

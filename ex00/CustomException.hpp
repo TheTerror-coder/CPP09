@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:49:52 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/23 19:05:40 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/24 16:18:42 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ class CustomException
 		template <typename Texception>
 		static void			errorThrow(const std::string& msg);
 		template <typename Texception>
+		static void			errorThrow(const std::string& msg, const Texception& e);
+		template <typename Texception>
 		static void			errorThrow(const std::string& filename, \
 										const std::string& msg);
 		template <typename Texception>
@@ -69,6 +71,14 @@ void			CustomException::errorThrow(const std::string& msg)
 		throw;
 	}
 }
+
+template<typename Texception>
+void			CustomException::errorThrow(const std::string& msg, const Texception& e)
+{
+	std::cerr << "Error: " << msg << ", " << e.what() << '\n';
+	throw;
+}
+
 template<typename Texception>
 void			CustomException::errorThrow(const std::string& filename, \
 		const std::string& msg)
@@ -84,6 +94,7 @@ void			CustomException::errorThrow(const std::string& filename, \
 		throw;
 	}
 }
+
 template<typename Texception>
 void			CustomException::errorThrow(const std::string& filename, \
 		size_t linenumber, const std::string& msg)

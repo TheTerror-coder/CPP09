@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:51:15 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/23 18:31:58 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/24 17:23:09 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ class Date
 {
 	public :
 	
+		Date();
 		Date(int y, int m, int d);
 		Date(int y, int m, int d, std::string dayofweek);
 		Date(std::string y, std::string m, std::string d);
@@ -81,7 +82,6 @@ class Date
 
 	private :
 	
-		Date();
 	
 		int											year;
 		int											month;
