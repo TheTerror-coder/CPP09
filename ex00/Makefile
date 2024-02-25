@@ -6,7 +6,7 @@
 #    By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 10:24:30 by TheTerror         #+#    #+#              #
-#    Updated: 2024/02/23 18:03:44 by TheTerror        ###   ########lyon.fr    #
+#    Updated: 2024/02/25 18:57:22 by TheTerror        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,14 @@ LIBFTPP	=	$(LIBFTPP_PATH)libftpp.a
 LIBFTPP_PATH = ./libftpp/
 OBJ_PATH = ./.obj/
 
-INCLUDE = Date.hpp ExchangeRateBase.hpp CustomException.hpp
+INCLUDE = Date.hpp ExchangeRateBase.hpp CustomException.hpp BitcoinExchange.hpp
 
 CC = 				c++
 CPPFLAGS =			-std=c++98
 CFLAGS=				$(CPPFLAGS) -Wall -Werror -Wextra -g3
 RM =				rm -rf
 
-SRC = main.cpp Date.cpp ExchangeRateBase.cpp CustomException.cpp
+SRC = main.cpp Date.cpp ExchangeRateBase.cpp CustomException.cpp BitcoinExchange.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJ_PATH)%.o)
 

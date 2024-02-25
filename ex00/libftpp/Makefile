@@ -6,7 +6,7 @@
 #    By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 16:59:24 by TheTerror         #+#    #+#              #
-#    Updated: 2024/02/24 20:22:59 by TheTerror        ###   ########lyon.fr    #
+#    Updated: 2024/02/25 13:33:33 by TheTerror        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFLAGS=				$(CPPFLAGS) -Wall -Werror -Wextra -g3
 AR = 				ar -rc
 RM =				rm -rf
 
-SRC = Libftpp.cpp Itoa.cpp StrTools.cpp FileParsingTools.cpp
+SRC = Libftpp.cpp Itoa.cpp StrTools.cpp FileParsingTools.cpp OutputTools.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJ_PATH)%.o)
 

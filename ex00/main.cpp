@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 10:51:53 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/24 20:42:06 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/25 18:56:18 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 #include "libftpp/Libftpp.hpp"
 #include "ExchangeRateBase.hpp"
 #include <iostream>
+#include <iomanip>
 #include <exception>
 
 
@@ -66,13 +67,19 @@ int	main(void)
 {
 	try
 	{
-		ExchangeRateBase	rate_base("test.cv");
+		ExchangeRateBase	rate_base("test.csv", "test.csv");
+		t_date				date(2013, 01, 1);
+		ExchangeRateBase	base2;
 		
 		rate_base.head();
+		base2 = ExchangeRateBase("test.csv", "test.csv");
+		base2.head();
+		std::cout << "at " << date << ",exchange rate = " << std::setprecision(7) << rate_base.request(date) << std::endl;
+		std::cout << "at " << date << ",exchange rate = " << std::setprecision(7) << base2.request(date) << std::endl;
 	}
 	catch(const std::exception& e)
 	{
-		// std::cerr << "Error: " << e.what() << '\n';
+		std::cerr << "Error: " << e.what() << '\n';
 	}
 	// const size_t	n = 184467440000000UL;
 

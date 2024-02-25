@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:38:13 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/24 20:31:16 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/25 13:33:14 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ class Libftpp
 		static bool				strIsWSpaces(const std::string& str);
 		static bool				authFileExtension(const std::string& filename, \
 								const std::string& extension, std::string& errorfield);
-		static bool				strIsDouble(std::string str);
 		static std::string		strToLower(std::string str);
 		static bool				strIsInt(std::string str);
 		static bool				strIsFloat(std::string str);
+		static bool				strIsDouble(std::string str);
+
+		static std::string		putFloat(float f);
+		static std::string		putDouble(double d);
 
 	private:
 

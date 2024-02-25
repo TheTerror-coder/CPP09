@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:49:52 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/24 16:18:42 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/25 15:41:19 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,20 @@ class CustomException
 				virtual const char*		what() const throw();
 		};
 
+		class	EmptyDatabaseException : public std::exception
+		{
+			public:
+				virtual const char*		what() const throw();
+		};
+		
+		class	DatabaseException : public std::exception
+		{
+			public:
+				virtual const char*		what() const throw();
+		};
+		
+		/*print error message on standard error output and return false*/
+		static bool			error(const std::string& msg);
 		template <typename Texception>
 		static void			errorThrow(const std::string& msg);
 		template <typename Texception>
