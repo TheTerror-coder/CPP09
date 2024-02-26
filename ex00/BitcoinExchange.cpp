@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:11:35 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/25 19:04:38 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/26 15:09:43 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,19 +131,22 @@ bool			BitcoinExchange::authFileHead(t_vars& vars, const std::string& infile)
 
 bool			BitcoinExchange::exchange(t_vars& vars, const std::string& infile)
 {
+	bool	fdbk;
+
 	while (vars.istream)
 	{
+		fdbk = true;
 		vars.line.clear();
 		std::getline(vars.istream, vars.line);
 		vars.linenum++;
-		if (!BitcoinExchange::checkContent(vars, infile))
-			return (false);
+		if (fdbk)
+			fdbk = BitcoinExchange::checkContent(vars, infile);
 		vars.linestream.clear();
 		vars.linestream.str(vars.line);
-		if (!parseDataLine(vars, infile))
-			return (false);
-		if (!exchange_op(vars))
-			return (false);
+		if (fdbk)
+			fdbk = parseDataLine(vars, infile);
+		if (fdbk)
+			fdbk = exchange_op(vars);
 	}
 	return (true);
 }
@@ -152,10 +155,13 @@ bool			BitcoinExchange::exchange_op(t_vars& vars)
 {
 	try
 	{
+		double		val;
 		t_date		date(vars.year, vars.month, vars.day);
 		
-		std::cout << vars.year << "-" << vars.month << "-" << vars.day \
-				<< " => " << vars.value << " = " << vars.rateDatabase.request(date);
+		val = vars.value * vars.rateDatabase.request(date);
+		std::cout	<< vars.year << "-" << vars.month << "-" << vars.day \
+					<< " => " << vars.value << " = " \
+					<< val << std::endl;
 	}
 	catch(const std::exception& e)
 	{
@@ -167,9 +173,11 @@ bool			BitcoinExchange::exchange_op(t_vars& vars)
 
 bool			BitcoinExchange::checkContent(t_vars& vars, const std::string& infile)
 {
-	if (vars.line.empty())
+	if (vars.istream && vars.line.empty())
 		return (CustomException::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) + "\": empty line"));
+	else if (vars.istream.eof())
+		return (false);
 	else if (!vars.istream)
 		return (CustomException::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
@@ -188,7 +196,7 @@ bool			BitcoinExchange::parseDataLine(t_vars& vars, const std::string& infile)
 	vars.linestream.str(vars.line);
 	std::getline(vars.linestream, year, '-');
 	std::getline(vars.linestream, month, '-');
-	std::getline(vars.linestream, day, ',');
+	std::getline(vars.linestream, day, '|');
 	std::getline(vars.linestream, value);
 	if (!BitcoinExchange::parseYear(vars, year, infile))
 		return (false);
@@ -256,6 +264,7 @@ bool			BitcoinExchange::parseDay(t_vars& vars, std::string& day, const std::stri
 {
 	double	n;
 
+	Libftpp::trimEnd(day, " 	", 1);
 	if (day.empty())
 		return (CustomException::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
@@ -276,7 +285,7 @@ bool			BitcoinExchange::parseDay(t_vars& vars, std::string& day, const std::stri
 						+ Libftpp::itoa(vars.linenum) \
 						+ "\": invalid day value \"" \
 						+ day + "\""));
-	vars.month = n;
+	vars.day = n;
 	return (true);
 }
 
@@ -284,6 +293,7 @@ bool			BitcoinExchange::parseValue(t_vars& vars, std::string& value, const std::
 {
 	double	n;
 
+	Libftpp::trimStart(value, " 	", 1);
 	if (value.empty())
 		return (CustomException::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
@@ -305,7 +315,7 @@ bool			BitcoinExchange::parseValue(t_vars& vars, std::string& value, const std::
 	if (n < 0)
 		return (CustomException::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": invalid bitcoin value \"" \
+						+ "\": bitcoin value not a positive number \"" \
 						+ value + "\""));
 	vars.value = n;
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:38:13 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/25 13:33:14 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/26 15:01:49 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ class Libftpp
 
 		static std::string		itoa(const size_t& n);
 		static std::string&		trimStart(std::string& str, const std::string& set);
+		static std::string&		trimStart(std::string& str, const std::string& set, const size_t& nb);
 		static std::string&		trimEnd(std::string& str, const std::string& set);
+		static std::string&		trimEnd(std::string& str, const std::string& set, const size_t& nb);
 		static std::string&		trim(std::string& str, const std::string& set);
+		static std::string&		trim(std::string& str, const std::string& set, const size_t& nb);
 		static std::string&		removeChars(std::string& str, const std::string& set);
 		static bool				strIsWSpaces(const std::string& str);
 		static bool				authFileExtension(const std::string& filename, \
-								const std::string& extension, std::string& errorfield);
+									const std::string& extension, std::string& errorfield);
 		static std::string		strToLower(std::string str);
 		static bool				strIsInt(std::string str);
 		static bool				strIsFloat(std::string str);

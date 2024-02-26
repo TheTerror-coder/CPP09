@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 20:12:50 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/24 20:32:27 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/25 19:25:52 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@ std::string&		Libftpp::trimStart(std::string& str, const std::string& set)
 	return (str);
 }
 
+std::string&		Libftpp::trimStart(std::string& str, const std::string& set, const size_t& nb)
+{
+	size_t	n;
+
+	n = nb;
+	while (!str.empty() && n && set.find(str.at(0)) != std::string::npos)
+	{
+		str.erase(0, 1);
+		n--;
+	}
+	return (str);
+}
+
 std::string&		Libftpp::trimEnd(std::string& str, const std::string& set)
 {
 	while (!str.empty() && set.find(str.at(str.size() - 1)) != std::string::npos)
@@ -30,10 +43,30 @@ std::string&		Libftpp::trimEnd(std::string& str, const std::string& set)
 	return (str);
 }
 
+std::string&		Libftpp::trimEnd(std::string& str, const std::string& set, const size_t& nb)
+{
+	size_t	n;
+
+	n = nb;
+	while (!str.empty() && n && set.find(str.at(str.size() - 1)) != std::string::npos)
+	{
+		str.erase(str.size() - 1, 1);
+		n--;
+	}
+	return (str);
+}
+
 std::string&		Libftpp::trim(std::string& str, const std::string& set)
 {
 	str = Libftpp::trimStart(str, set);
 	str = Libftpp::trimEnd(str, set);
+	return (str);
+}
+
+std::string&		Libftpp::trim(std::string& str, const std::string& set, const size_t& nb)
+{
+	str = Libftpp::trimStart(str, set, nb);
+	str = Libftpp::trimEnd(str, set, nb);
 	return (str);
 }
 
