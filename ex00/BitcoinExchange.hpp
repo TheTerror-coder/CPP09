@@ -6,12 +6,15 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:07:10 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/25 19:04:32 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/26 16:17:24 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef	BITCOINEXCHANGE_HPP
 # define	BITCOINEXCHANGE_HPP
+
+# define	__DATABASENAME "database_1.0"
+# define	__DATABASEFILENAME "data.csv"
 
 # include <iostream>
 # include <fstream>

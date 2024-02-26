@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:51:50 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/25 15:38:39 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/26 16:37:48 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,4 @@ const char*		CustomException::EmptyDatabaseException::what() const throw()
 const char*		CustomException::DatabaseException::what() const throw()
 {
 	return ("ErrorDatabaseException thrown");
-}
-
-bool			CustomException::error(const std::string& msg)
-{
-	std::cerr << "Error: " << msg << std::endl;
-	return (false);
 }

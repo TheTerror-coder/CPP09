@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:48:43 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/25 19:04:55 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/26 16:49:22 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ ExchangeRateBase::ExchangeRateBase(const std::string& name, const std::string& f
 	}
 	catch(const t_DateErrorException& e)
 	{
-		CustomException::errorThrow<t_DateErrorException>(this->filename, this->linenum, e);
+		Libftpp::errorThrow<t_DateErrorException>(this->filename, this->linenum, e);
 	}
 	catch(const std::ifstream::failure& e)
 	{
@@ -120,14 +120,14 @@ double			ExchangeRateBase::request(const t_date& date)
 	double													exc_rate;
 
 	if (this->database.empty() && this->name.empty())
-		CustomException::errorThrow<t_EmptyDatabaseException>(\
+		Libftpp::errorThrow<t_EmptyDatabaseException>(\
 				"an unnamed database is empty");
 	else if (this->database.empty())
-		CustomException::errorThrow<t_EmptyDatabaseException>(\
+		Libftpp::errorThrow<t_EmptyDatabaseException>(\
 				"the database \"" + this->name +  "\" is empty");
 	it = this->database.lower_bound(date);
 	if (it == this->database.end())
-		CustomException::errorThrow<t_DatabaseException>(\
+		Libftpp::errorThrow<t_DatabaseException>(\
 				"unfound exchange rate in the database \"" \
 				+ this->name +  "\"");
 	exc_rate = it->second;
@@ -139,7 +139,7 @@ void			ExchangeRateBase::parseFilename(void)
 	std::string		errorfield;
 	
 	if (!Libftpp::authFileExtension(this->filename, "csv", errorfield))
-		CustomException::errorThrow<t_InfileErrorException>(this->filename, errorfield);
+		Libftpp::errorThrow<t_InfileErrorException>(this->filename, errorfield);
 }
 
 void			ExchangeRateBase::openFile(void)
@@ -152,36 +152,36 @@ void			ExchangeRateBase::openFile(void)
 	}
 	catch(const std::ifstream::failure& e)
 	{
-		CustomException::errorThrow<std::ifstream::failure>(\
+		Libftpp::errorThrow<std::ifstream::failure>(\
 				"failed to open \"" + this->filename + "\"", e);
 	}
 	if (!this->istream.good())
-		CustomException::errorThrow<t_InfileErrorException>(\
+		Libftpp::errorThrow<t_InfileErrorException>(\
 				"something went wrong when opening \"" + this->filename + "\"");
 }
 
 void			ExchangeRateBase::authFileHead(void)
 {
 	if (this->istream.eof() && this->line.empty())
-		CustomException::errorThrow<t_InfileErrorException>(\
+		Libftpp::errorThrow<t_InfileErrorException>(\
 				"empty file \"" + this->filename + "\"");
 	else if (!this->istream)
-		CustomException::errorThrow<t_InfileErrorException>(\
+		Libftpp::errorThrow<t_InfileErrorException>(\
 				"something went wrong on the read of the infile \"" \
 				+ this->filename + "\"\nbadbit or failbit setted");
 	else if (this->line != "date,exchange_rate")
-		CustomException::errorThrow<t_SyntaxErrorException>(\
+		Libftpp::errorThrow<t_SyntaxErrorException>(\
 				"invalid file header \"" + this->line + "\"");
 }
 
 void			ExchangeRateBase::checkContent(void)
 {
 	if (this->istream.eof() && this->line.empty())
-		CustomException::errorThrow<t_InfileErrorException>(\
+		Libftpp::errorThrow<t_InfileErrorException>(\
 				"\"" + this->filename \
 				+ "\": empty database");
 	else if (!this->istream)
-		CustomException::errorThrow<t_InfileErrorException>(\
+		Libftpp::errorThrow<t_InfileErrorException>(\
 				"something went wrong on the read of the infile \"" \
 				+ this->filename + "\"\nbadbit or failbit setted");
 }
@@ -198,7 +198,7 @@ void			ExchangeRateBase::buildDatabase(void)
 		date = t_date(this->year, this->month, this->day);
 		exc_rate = std::strtod(this->exchange_rate.c_str(), NULL);
 		if (exc_rate < 0)
-			CustomException::errorThrow<t_SyntaxErrorException>(\
+			Libftpp::errorThrow<t_SyntaxErrorException>(\
 			this->filename, this->linenum, "exchange rate cannot be negative");
 		this->database.insert(std::pair<t_date, double>(date, exc_rate));
 		this->line.clear();
@@ -206,7 +206,7 @@ void			ExchangeRateBase::buildDatabase(void)
 		this->linenum++;
 	}
 	if (this->istream)
-		CustomException::errorThrow<t_SyntaxErrorException>(this->filename, \
+		Libftpp::errorThrow<t_SyntaxErrorException>(this->filename, \
 				this->linenum, "empty line");
 }
 
@@ -219,21 +219,21 @@ void			ExchangeRateBase::parseDataLine(void)
 	std::getline(this->linestream, this->day, ',');
 	std::getline(this->linestream, this->exchange_rate);
 	if (this->year.empty())
-		CustomException::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
+		Libftpp::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
 				"empty year field");
 	if (this->month.empty())
-		CustomException::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
+		Libftpp::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
 				"empty month field");
 	if (this->day.empty())
-		CustomException::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
+		Libftpp::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
 				"empty day field");
 	if (this->exchange_rate.empty())
-		CustomException::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
+		Libftpp::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
 				"empty exchange rate field");
 	if (!Libftpp::strIsInt(this->exchange_rate) && !Libftpp::strIsFloat(this->exchange_rate) \
 			&& !Libftpp::strIsDouble(this->exchange_rate))
 	{
-		CustomException::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
+		Libftpp::errorThrow<t_SyntaxErrorException>(this->filename, this->linenum,\
 				"invalid exchange rate format \"" + this->exchange_rate + "\"");
 	}
 }

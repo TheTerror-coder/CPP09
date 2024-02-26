@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:38:13 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/26 15:01:49 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/26 16:48:58 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,37 @@ class Libftpp
 		static std::string		putFloat(float f);
 		static std::string		putDouble(double d);
 
+		/*prints error message on standard error output and returns false*/
+		static bool				error(const std::string& msg);
+		/*prints error message on standard error output then throws Texception*/
+		template <typename Texception>
+		static void				errorThrow(const std::string& msg);
+		/*prints error message on standard error output then throws Texception 'e'*/
+		template <typename Texception>
+		static void				errorThrow(const std::string& msg, const Texception& e);
+		/*prints error message on standard error output specifying the file's name
+		* then throws Texception*/
+		template <typename Texception>
+		static void				errorThrow(const std::string& filename, \
+										const std::string& msg);
+		/*prints error message on standard error output specifying the file's name,
+		* the number of line then throws Texception*/
+		template <typename Texception>
+		static void				errorThrow(const std::string& filename, \
+										size_t linenumber, const std::string& msg);
+		/*prints error message on standard error output specifying the file's name,
+		* the number of line then throws Texception 'e'*/
+		template <typename Texception>
+		static void				errorThrow(const std::string& filename, \
+										size_t linenumber, const Texception& e);
+
 	private:
 
 		Libftpp();
 };
+
+/*template function errorThrow()'s implementation*/
+#include "Error.tpp"
 
 #endif
 /* ************************************************************************** */

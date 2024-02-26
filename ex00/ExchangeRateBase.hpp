@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:43:38 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/25 18:35:34 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/02/26 16:17:17 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ class ExchangeRateBase
 		~ExchangeRateBase();
 
 		void				setName(const std::string& name);
-		void				setFilename(const std::string& filename);
 		const std::string&	getName(void) const;
 		const std::string&	getFilename(void) const;
 		/*prints the first 10 elements of the database on the standard output*/
@@ -61,6 +60,7 @@ class ExchangeRateBase
 		size_t											linenum;
 		std::istringstream								linestream;
 
+		void											setFilename(const std::string& filename);
 		/*authenticates the name of the file*/
 		void											parseFilename(void);
 		/*opens the file 'filename' on a private input stream 'istream'*/
