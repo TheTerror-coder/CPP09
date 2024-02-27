@@ -6,7 +6,7 @@
 #    By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 16:59:24 by TheTerror         #+#    #+#              #
-#    Updated: 2024/02/26 16:50:44 by TheTerror        ###   ########lyon.fr    #
+#    Updated: 2024/02/27 21:28:22 by TheTerror        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libftpp.a
 
 OBJ_PATH = ./.obj/
 
-INCLUDE = Libftpp.hpp
+INCLUDE = Libftpp.hpp Error.tpp
 
 CC = 				c++
 CPPFLAGS =			-std=c++98

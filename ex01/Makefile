@@ -6,25 +6,25 @@
 #    By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 10:24:30 by TheTerror         #+#    #+#              #
-#    Updated: 2024/02/27 21:27:52 by TheTerror        ###   ########lyon.fr    #
+#    Updated: 2024/02/27 21:25:58 by TheTerror        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = btc
+NAME = RPN
 
 LIBFTPP	=	$(LIBFTPP_PATH)libftpp.a
 
 LIBFTPP_PATH = ./libftpp/
 OBJ_PATH = ./.obj/
 
-INCLUDE = Include.h Date.hpp ExchangeRateBase.hpp CustomException.hpp BitcoinExchange.hpp
+INCLUDE = RPN.hpp
 
 CC = 				c++
 CPPFLAGS =			-std=c++98
 CFLAGS=				$(CPPFLAGS) -Wall -Werror -Wextra -g3
 RM =				rm -rf
 
-SRC = main.cpp Date.cpp ExchangeRateBase.cpp CustomException.cpp BitcoinExchange.cpp
+SRC = main.cpp RPN.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJ_PATH)%.o)
 
