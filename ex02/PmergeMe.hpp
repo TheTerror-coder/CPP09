@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:38:08 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/03/03 20:15:52 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/04 17:13:05 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <vector>
 # include <list>
 # include <cstdlib>
-# include <cmath>
 # include <limits>
 # include "libftpp/Libftpp.hpp"
 
@@ -47,8 +46,8 @@ class PmergeMe
 				std::vector<std::vector<unsigned> >		arr2dim;
 				std::vector<unsigned>					sorted;
 				std::vector<unsigned>					pendElms;
-				size_t									k;
-				size_t									erased;
+				size_t									k;			//specify the k'th Jacobsthal number
+				size_t									erased;		//erased elements from 'pendelms' array counter
 			
 			private:
 			
@@ -63,6 +62,12 @@ class PmergeMe
 				List_variables	operator= (const List_variables& other);
 				~List_variables();
 		
+				std::list<std::list<unsigned> >		arr2dim;
+				std::list<unsigned>					sorted;
+				std::list<unsigned>					pendElms;
+				size_t									k;			//specify the k'th Jacobsthal number
+				size_t									erased;		//erased elements from 'pendelms' array counter
+			
 			private:
 			
 		};
@@ -80,7 +85,9 @@ class PmergeMe
 		static bool		insertPendElm(t_vvars& vars);
 		static bool		insertFollowingJacobsthal(t_vvars& vars);
 		static bool		insert_op(t_vvars& vars, unsigned elm);
-		static size_t		jacobsthalNumber(size_t k);
+
+		
+		static bool		copyVector2List(t_vvars& vvars, t_lvars& lvars);
 
 };
 

@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:43:22 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/03/03 21:56:28 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/04 17:24:45 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,34 @@ PmergeMe::List_variables	PmergeMe::List_variables::operator= (const List_variabl
 PmergeMe::List_variables::~List_variables()
 {}
 
+/*parses obviously the integers sequence passed to the main program
+* then sorts the obtained sequence*/
 bool		PmergeMe::mergeInsert(const char** argv)
 {
-	t_vvars		vars;
+	t_vvars		vvars;
+	t_lvars		lvars;
 
-	if (!parseArgv(vars, argv))
+	if (!parseArgv(vvars, argv))
 		return (false);
-	if (!sort(vars))
+	copyVector2List(vvars, lvars);
+for (std::vector<std::vector<unsigned> >::iterator it = vvars.arr2dim.begin(); it != vvars.arr2dim.end(); it++)
+{
+	std::cout << it->at(0);
+	if (it->size() == 2)
+		std::cout << " | " << it->at(1) << std::endl;
+	else
+		std::cout << std::endl;
+}
+for (std::list<std::list<unsigned> >::iterator it = lvars.arr2dim.begin(); it != lvars.arr2dim.end(); it++)
+{
+	std::cout << it->front();
+	if (it->size() == 2)
+		std::cout << " | " << it->back() << std::endl;
+	else
+		std::cout << std::endl;
+}
+return (true);
+	if (!sort(vvars))
 		return (false);
 	return (true);
 }
@@ -108,6 +129,7 @@ bool		PmergeMe::parseArgv(t_vvars& vars, const char** argv)
 	return (true);
 }
 
+/*checks formatting and convert from */
 bool		PmergeMe::checkGetValue(double& val, const char* arg)
 {
 	if (!Libftpp::strIsInt(arg))
@@ -122,6 +144,10 @@ bool		PmergeMe::checkGetValue(double& val, const char* arg)
 					+ "\" overflowing"));
 	return (true);
 }
+
+
+/** *******************************std::VECTOR***************************************** **/
+
 
 bool		PmergeMe::sort(t_vvars& vars)
 {
@@ -138,6 +164,7 @@ bool		PmergeMe::sort(t_vvars& vars)
 	return (true);
 }
 
+/*implements the Ford-Johnson sorting algorithm*/
 bool		PmergeMe::merge(t_vvars& vars)
 {
 	sortEachPair(vars);
@@ -172,6 +199,8 @@ std::cout << "----------" << std::endl;
 	return (true);
 }
 
+/*first step of F-J algorithm: sort the two elements
+* of each single pair in decreasing order*/
 bool		PmergeMe::sortEachPair(t_vvars& vars)
 {
 	unsigned	tmp;
@@ -192,6 +221,11 @@ bool		PmergeMe::sortEachPair(t_vvars& vars)
 	return (true);
 }
 
+/*second step of F-J algorithm: sort increasingly the pairs by 
+* their first element (the highest). That is perfomed here by
+* building the main chain (ordered sequence) with essentially 
+* the first elements of pairs using insertion algorithm and 
+* at the same time the pend elements chain containing the respective pend element*/
 bool		PmergeMe::sortPairs(t_vvars& vars)
 {
 	if (vars.arr2dim.size() && vars.arr2dim.begin()->size())
@@ -236,6 +270,8 @@ bool		PmergeMe::insertFirstElm(t_vvars& vars, unsigned& elm1, unsigned& elm2)
 	return (false);
 }
 
+/*third and last step of F-J algorithm: pend elements are inserted 
+* in main chain by following Jacobsthal numbers to get the next pend element to insert*/
 bool		PmergeMe::insertPendElm(t_vvars& vars)
 {
 	std::vector<unsigned>::iterator 	start;
@@ -248,36 +284,25 @@ bool		PmergeMe::insertPendElm(t_vvars& vars)
 	vars.pendElms.erase(vars.pendElms.begin());
 	vars.erased++;
 	insertFollowingJacobsthal(vars);
-/*
-	for (std::vector<unsigned>::iterator it2 = vars.secondElms.begin(); \
-			it2 != vars.secondElms.end(); it2++)
-	{
-		for (std::vector<unsigned>::iterator it1 = start; \
-				it1 != vars.sorted.end(); it1++, it2++)
-		{
-			if (elm1 < *it1)
-				return (vars.sorted.insert(it1, elm1), \
-						vars.secondElms.insert(it2, elm2), true);
-			if (*it1 == elm1)
-				return (Libftpp::error("found duplicated values of \"" \
-								+ Libftpp::itoa(static_cast<size_t>(elm1)) + "\""));
-		}
-	}
-*/
+	for (std::vector<unsigned>::iterator it = vars.pendElms.begin(); \
+			it != vars.pendElms.end(); it++)
+		insert_op(vars, *it);
+	vars.pendElms.clear();
 	return (true);
 }
 
 bool		PmergeMe::insertFollowingJacobsthal(t_vvars& vars)
 {
 	vars.k = 3;
-	for (size_t	i = jacobsthalNumber(vars.k) - vars.erased - 1; \
-			i < vars.pendElms.size(); i = jacobsthalNumber(vars.k) - vars.erased - 1)
+	for (size_t	i = Libftpp::jacobsthalNumber(vars.k) - vars.erased - 1; \
+			i < vars.pendElms.size(); \
+			i = Libftpp::jacobsthalNumber(vars.k) - vars.erased - 1)
 	{
 		insert_op(vars, vars.pendElms.at(i));
 		vars.pendElms.erase(vars.pendElms.begin() + i);
 		
-		for (size_t x = jacobsthalNumber(vars.k) - vars.erased - 2;	\
-				x + vars.erased + 1 > jacobsthalNumber(vars.k - 1) \
+		for (size_t x = Libftpp::jacobsthalNumber(vars.k) - vars.erased - 2; \
+				x + vars.erased + 1 > Libftpp::jacobsthalNumber(vars.k - 1) \
 				&& x < vars.pendElms.size(); x--)
 		{
 			insert_op(vars, vars.pendElms.at(x));
@@ -286,16 +311,8 @@ bool		PmergeMe::insertFollowingJacobsthal(t_vvars& vars)
 		}
 		vars.erased++;
 		vars.k++;
-// std::cout << "x ************* " << x << std::endl;
-// std::cout << "jacob k - 1 ::: "  << jacobsthalNumber(vars.k - 1) << std::endl;
-// std::cout << "erased ++++++++ "  << vars.erased << std::endl;
 	}
 	return (true);
-}
-
-size_t	PmergeMe::jacobsthalNumber(size_t k)
-{
-	return ((std::pow(2, k) - std::pow(-1, k)) / 3);
 }
 
 bool		PmergeMe::insert_op(t_vvars& vars, unsigned elm)
@@ -314,6 +331,25 @@ bool		PmergeMe::insert_op(t_vvars& vars, unsigned elm)
 	{
 		if (elm <= *it)
 			return (vars.sorted.insert(it, elm), true);
+	}
+	return (false);
+}
+
+
+/** *******************************std::LIST***************************************** **/
+
+
+bool		PmergeMe::copyVector2List(t_vvars& vvars, t_lvars& lvars)
+{
+	std::list<unsigned>		arr;
+
+	for (std::vector<std::vector<unsigned> >::iterator	it = vvars.arr2dim.begin();
+			it != vvars.arr2dim.end(); it++)
+	{
+		arr.clear();
+		for (std::vector<unsigned>::iterator i = it->begin(); i != it->end(); i++)
+			arr.push_back(*i);
+		lvars.arr2dim.push_back(arr);
 	}
 	return (false);
 }

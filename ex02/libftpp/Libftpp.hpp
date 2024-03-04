@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:38:13 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/27 19:32:59 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/04 15:42:14 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <string>
+# include <cmath>
 
 class Libftpp
 {
@@ -53,8 +54,11 @@ class Libftpp
 		static std::string		putFloat(float f);
 		static std::string		putDouble(double d);
 
+		/*compute the k'th Jacobsthal number with k in range [1, ++[ and return the value*/
+		static size_t			jacobsthalNumber(size_t k);
 		template <typename Tdata>
 		static Tdata			operation(const Tdata& lhs, const Tdata& rhs, const char opsign);
+		
 		/*prints error message on standard error output and returns false*/
 		static bool				error(const std::string& msg);
 		/*prints error message on standard error output then throws Texception*/
