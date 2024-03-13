@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:43:22 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/03/04 19:04:42 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 19:43:10 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ PmergeMe::PmergeMe(const PmergeMe& other)
 /*assignment operator*/
 PmergeMe	PmergeMe::operator= (const PmergeMe& other)
 {
-	(void)	other;
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 
@@ -45,7 +46,8 @@ PmergeMe::Vector_variables::Vector_variables(const Vector_variables& other)
 
 PmergeMe::Vector_variables	PmergeMe::Vector_variables::operator= (const Vector_variables& other)
 {
-	(void)	other;
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 
@@ -61,7 +63,8 @@ PmergeMe::List_variables::List_variables(const List_variables& other)
 
 PmergeMe::List_variables	PmergeMe::List_variables::operator= (const List_variables& other)
 {
-	(void)	other;
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 

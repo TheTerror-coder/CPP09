@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:40:24 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/23 17:18:58 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 19:42:26 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ Libftpp::Libftpp(const Libftpp& other)
 /*assignment operator*/
 Libftpp&	Libftpp::operator= (const Libftpp& other)
 {
-	(void) other;
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 

@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:11:35 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/26 16:49:58 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/13 18:25:08 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
 /*assignment operator*/
 BitcoinExchange&	BitcoinExchange::operator= (const BitcoinExchange& other)
 {
-	(void) other;
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 
@@ -52,6 +53,8 @@ BitcoinExchange::Variables::Variables(const Variables& other)
 /*Variables: assignment operator*/
 BitcoinExchange::Variables&		BitcoinExchange::Variables::operator= (const Variables& other)
 {
+	if (this == &other)
+		return (*this);
 	this->istream.clear();
 	this->line = other.line;
 	this->year = other.year;
@@ -112,24 +115,24 @@ bool				BitcoinExchange::openFile(t_vars& vars, const std::string& infile)
 	return (true);
 }
 
-bool			BitcoinExchange::authFileHead(t_vars& vars, const std::string& infile)
+bool				BitcoinExchange::authFileHead(t_vars& vars, const std::string& infile)
 {
 	vars.line.clear();
 	std::getline(vars.istream, vars.line);
 	vars.linenum++;
 	if (vars.istream.eof() && vars.line.empty())
-		return (Libftpp::error("empty file \"" + infile + "\""));
+		return (Libftpp::error("empty file \"" + infile + "\""), true);
 	else if (!vars.istream && !vars.istream.eof())
 		return (Libftpp::error(\
 				"something went wrong on the read of the infile \"" \
 				+ infile + "\"\nbadbit or failbit setted"));
 	else if (vars.line != "date | value")
 		return (Libftpp::error("invalid file header \"" \
-						+ vars.line + "\""));
+						+ vars.line + "\""), true);
 	return (true);
 }
 
-bool			BitcoinExchange::exchange(t_vars& vars, const std::string& infile)
+bool				BitcoinExchange::exchange(t_vars& vars, const std::string& infile)
 {
 	bool	fdbk;
 
@@ -151,7 +154,7 @@ bool			BitcoinExchange::exchange(t_vars& vars, const std::string& infile)
 	return (true);
 }
 
-bool			BitcoinExchange::exchange_op(t_vars& vars)
+bool				BitcoinExchange::exchange_op(t_vars& vars)
 {
 	try
 	{
@@ -165,13 +168,13 @@ bool			BitcoinExchange::exchange_op(t_vars& vars)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		// std::cerr << e.what() << '\n';
 		return (false);
 	}
 	return (true);
 }
 
-bool			BitcoinExchange::checkContent(t_vars& vars, const std::string& infile)
+bool				BitcoinExchange::checkContent(t_vars& vars, const std::string& infile)
 {
 	if (vars.istream && vars.line.empty())
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
@@ -181,11 +184,11 @@ bool			BitcoinExchange::checkContent(t_vars& vars, const std::string& infile)
 	else if (!vars.istream)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": something went wrong while reading"));
+						+ ": something went wrong while reading"));
 	return (true);
 }
 
-bool			BitcoinExchange::parseDataLine(t_vars& vars, const std::string& infile)
+bool				BitcoinExchange::parseDataLine(t_vars& vars, const std::string& infile)
 {
 	std::string			year;
 	std::string			month;
@@ -209,58 +212,58 @@ bool			BitcoinExchange::parseDataLine(t_vars& vars, const std::string& infile)
 	return (true);
 }
 
-bool			BitcoinExchange::parseYear(t_vars& vars, std::string& year, const std::string& infile)
+bool				BitcoinExchange::parseYear(t_vars& vars, std::string& year, const std::string& infile)
 {
 	double	n;
 
 	if (year.empty())
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": empty year field"));
+						+ ": empty year field"));
 	if (!Libftpp::strIsInt(year))
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": invalid year value format \"" \
+						+ ": invalid year value format \"" \
 						+ year + "\""));
 	n = std::strtod(year.c_str(), NULL);
 	if (n < -2147483648 || n > 2147483647)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": too large year value \"" \
+						+ ": too large year value \"" \
 						+ year + "\""));
 	vars.year = n;
 	return (true);
 }
 
-bool			BitcoinExchange::parseMonth(t_vars& vars, std::string& month, const std::string& infile)
+bool				BitcoinExchange::parseMonth(t_vars& vars, std::string& month, const std::string& infile)
 {
 	double	n;
 
 	if (month.empty())
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": empty month field"));
+						+ ": empty month field"));
 	if (!Libftpp::strIsInt(month))
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": invalid month value format \"" \
+						+ ": invalid month value format \"" \
 						+ month + "\""));
 	n = std::strtod(month.c_str(), NULL);
 	if (n < -2147483648 || n > 2147483647)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": too large month value \"" \
+						+ ": too large month value \"" \
 						+ month + "\""));
 	if (n < 1 || n > 12)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": invalid month value \"" \
+						+ ": invalid month value \"" \
 						+ month + "\""));
 	vars.month = n;
 	return (true);
 }
 
-bool			BitcoinExchange::parseDay(t_vars& vars, std::string& day, const std::string& infile)
+bool				BitcoinExchange::parseDay(t_vars& vars, std::string& day, const std::string& infile)
 {
 	double	n;
 
@@ -268,28 +271,28 @@ bool			BitcoinExchange::parseDay(t_vars& vars, std::string& day, const std::stri
 	if (day.empty())
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": empty day field"));
+						+ ": empty day field"));
 	if (!Libftpp::strIsInt(day))
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": invalid day value format \"" \
+						+ ": invalid day value format \"" \
 						+ day + "\""));
 	n = std::strtod(day.c_str(), NULL);
 	if (n < -2147483648 || n > 2147483647)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": too large day value \"" \
+						+ ": too large day value \"" \
 						+ day + "\""));
 	if (n < 1 || n > 31)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": invalid day value \"" \
+						+ ": invalid day value \"" \
 						+ day + "\""));
 	vars.day = n;
 	return (true);
 }
 
-bool			BitcoinExchange::parseValue(t_vars& vars, std::string& value, const std::string& infile)
+bool				BitcoinExchange::parseValue(t_vars& vars, std::string& value, const std::string& infile)
 {
 	double	n;
 
@@ -297,25 +300,25 @@ bool			BitcoinExchange::parseValue(t_vars& vars, std::string& value, const std::
 	if (value.empty())
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": empty bitcoin value field"));
+						+ ": empty bitcoin value field"));
 	if (!Libftpp::strIsInt(value) && !Libftpp::strIsFloat(value) \
 			&& !Libftpp::strIsDouble(value))
 	{
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": invalid bitcoin value format \"" \
+						+ ": invalid bitcoin value format \"" \
 						+ value + "\""));
 	}
 	n = std::strtod(value.c_str(), NULL);
 	if (n > 1000)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": too large bitcoin value \"" \
+						+ ": too large bitcoin value \"" \
 						+ value + "\""));
 	if (n < 0)
 		return (Libftpp::error("\"" + infile + "\":" + " at line " \
 						+ Libftpp::itoa(vars.linenum) \
-						+ "\": bitcoin value not a positive number \"" \
+						+ ": bitcoin value not a positive number \"" \
 						+ value + "\""));
 	vars.value = n;
 	return (true);

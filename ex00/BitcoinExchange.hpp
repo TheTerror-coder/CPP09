@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 15:07:10 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/26 16:17:24 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/13 18:55:59 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "CustomException.hpp"
 # include "ExchangeRateBase.hpp"
 
+/*static class*/
 class BitcoinExchange
 {
 	public:

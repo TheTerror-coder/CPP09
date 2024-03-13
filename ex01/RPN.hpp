@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:32:32 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/27 20:52:01 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/13 19:44:46 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include <iostream>
 # include <sstream>
+# include <cstdlib>
 # include <stack>
 # include "libftpp/Libftpp.hpp"
 
+/*static class*/
 class RPN
 {
 	public:

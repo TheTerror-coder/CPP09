@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:48:43 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/26 16:49:22 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/13 18:55:04 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ ExchangeRateBase::ExchangeRateBase() : linenum(0)
 ExchangeRateBase::ExchangeRateBase(const std::string& name, const std::string& filename) \
 	: name(name), filename(filename), linenum(0)
 {
+	if (name.empty())
+		this->name = "no name";
 	parseFilename();
 	openFile();
 	try
@@ -62,6 +64,8 @@ ExchangeRateBase::ExchangeRateBase(const ExchangeRateBase& other)
 /*assignment operator*/
 ExchangeRateBase&	ExchangeRateBase::operator= (const ExchangeRateBase& other)
 {
+	if (this == &other)
+		return (*this);
 	this->name = other.name;
 	this->database = other.database;
 	this->istream.clear();
@@ -100,7 +104,7 @@ const std::string&	ExchangeRateBase::getFilename(void) const
 	return (this->filename);
 }
 
-void			ExchangeRateBase::head(void)
+void				ExchangeRateBase::head(void)
 {
 	int	i;
 
@@ -111,13 +115,12 @@ void			ExchangeRateBase::head(void)
 		std::cout << it->first << "," << it->second << std::endl;
 		i++;
 	}
-std::cout << "***looped : " << i << " times" << std::endl;
 }
 
-double			ExchangeRateBase::request(const t_date& date)
+double				ExchangeRateBase::request(const t_date& date)
 {
 	std::map<t_date,double, std::greater<t_date> >::iterator	it;
-	double													exc_rate;
+	double														exc_rate;
 
 	if (this->database.empty() && this->name.empty())
 		Libftpp::errorThrow<t_EmptyDatabaseException>(\
@@ -134,7 +137,7 @@ double			ExchangeRateBase::request(const t_date& date)
 	return (exc_rate);
 }
 
-void			ExchangeRateBase::parseFilename(void)
+void				ExchangeRateBase::parseFilename(void)
 {
 	std::string		errorfield;
 	
@@ -142,7 +145,7 @@ void			ExchangeRateBase::parseFilename(void)
 		Libftpp::errorThrow<t_InfileErrorException>(this->filename, errorfield);
 }
 
-void			ExchangeRateBase::openFile(void)
+void				ExchangeRateBase::openFile(void)
 {
 	try
 	{
@@ -160,7 +163,7 @@ void			ExchangeRateBase::openFile(void)
 				"something went wrong when opening \"" + this->filename + "\"");
 }
 
-void			ExchangeRateBase::authFileHead(void)
+void				ExchangeRateBase::authFileHead(void)
 {
 	if (this->istream.eof() && this->line.empty())
 		Libftpp::errorThrow<t_InfileErrorException>(\
@@ -174,7 +177,7 @@ void			ExchangeRateBase::authFileHead(void)
 				"invalid file header \"" + this->line + "\"");
 }
 
-void			ExchangeRateBase::checkContent(void)
+void				ExchangeRateBase::checkContent(void)
 {
 	if (this->istream.eof() && this->line.empty())
 		Libftpp::errorThrow<t_InfileErrorException>(\
@@ -186,7 +189,7 @@ void			ExchangeRateBase::checkContent(void)
 				+ this->filename + "\"\nbadbit or failbit setted");
 }
 
-void			ExchangeRateBase::buildDatabase(void)
+void				ExchangeRateBase::buildDatabase(void)
 {
 	t_date	date;
 	double	exc_rate;
@@ -210,7 +213,7 @@ void			ExchangeRateBase::buildDatabase(void)
 				this->linenum, "empty line");
 }
 
-void			ExchangeRateBase::parseDataLine(void)
+void				ExchangeRateBase::parseDataLine(void)
 {
 	this->linestream.clear();
 	this->linestream.str(this->line);

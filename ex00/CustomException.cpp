@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:51:50 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/26 16:37:48 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 19:39:57 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ CustomException::CustomException(const CustomException& other)
 
 CustomException&	CustomException::operator= (const CustomException& other)
 {
-	(void)	other;
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 

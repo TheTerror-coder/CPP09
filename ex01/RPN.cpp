@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:38:02 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/27 21:20:52 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/13 19:47:37 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ RPN::RPN(const RPN& other)
 /*assignment operator*/
 RPN&	RPN::operator=(const RPN& other)
 {
-	(void) other;
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 
@@ -37,14 +38,13 @@ RPN::~RPN()
 
 /*Variables: default constructor*/
 RPN::Variables::Variables()
-	: expr(""), __stack(), sstream(), element(""), value(0), \
-	lhs(0), rhs(0), result(0)
+	: value(0), lhs(0), rhs(0), result(0)
 {
 }
 
 /*Variables: copy constructor*/
 RPN::Variables::Variables(const Variables& other)
-	: expr(other.expr), __stack(other.__stack), sstream(), \
+	: expr(other.expr), __stack(other.__stack), \
 	element(other.element), value(other.value), \
 	lhs(other.lhs), rhs(other.rhs), result(other.result)
 {
@@ -53,8 +53,10 @@ RPN::Variables::Variables(const Variables& other)
 }
 
 /*Variables: assignment operator*/
-RPN::Variables&	RPN::Variables::operator=(const Variables& other)
+RPN::Variables&		RPN::Variables::operator=(const Variables& other)
 {
+	if (this == &other)
+		return (*this);
 	this->expr = other.expr;
 	this->__stack = other.__stack;
 	this->sstream.clear();
@@ -121,7 +123,7 @@ bool	RPN::calculate_op(t_vars& vars)
 				if (!RPN::pushOnStack(vars))
 					return (false);	
 			}
-			else if (Libftpp::isSign(vars.element.at(0)))
+			else if (vars.element.size() == 1 && Libftpp::isSign(vars.element.at(0)))
 			{
 				if (!RPN::evaluate(vars))
 					return (false);
@@ -138,7 +140,7 @@ bool	RPN::calculate_op(t_vars& vars)
 
 bool	RPN::pushOnStack(t_vars& vars)
 {
-	vars.value = vars.element.at(0) - 48;
+	vars.value = std::atol(vars.element.c_str());
 	vars.__stack.push(vars.value);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:59:07 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/24 17:23:33 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/13 18:47:26 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ Date::Date(const Date& other) : year(other.year), month(other.month), \
 /*assignment operator*/
 Date&	Date::operator=(const Date& other)
 {
+	if (this == &other)
+		return (*this);
 	this->year = other.year;
 	this->month = other.month;
 	this->day = other.day;
@@ -276,6 +278,7 @@ bool			Date::strIsInt(std::string str)
 	}
 	return (true);
 }
+
 std::ostream&	operator<< (std::ostream& os, const Date& lhs)
 {
 	if (lhs.getDayOfWeek().empty())
