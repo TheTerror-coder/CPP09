@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:38:08 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/03/15 15:32:13 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/15 15:39:16 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ class PmergeMe
 		static bool		mergeInsert(const char** argv);
 		static bool		mergeInsert(const std::string& argv);
 
-	// private:
+	private:
 
 		PmergeMe();
 		
