@@ -6,7 +6,7 @@
 #    By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 10:24:30 by TheTerror         #+#    #+#              #
-#    Updated: 2024/03/15 15:36:08 by TheTerror        ###   ########lyon.fr    #
+#    Updated: 2024/03/15 15:37:38 by TheTerror        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_PATH = ./.obj/
 INCLUDE = PmergeMe.hpp
 
 CC = 				c++
-CPPFLAGS =			-std=c++98
+CPPFLAGS =			#-std=c++98
 CFLAGS=				$(CPPFLAGS) -Wall -Werror -Wextra -g3
 RM =				rm -rf
 
