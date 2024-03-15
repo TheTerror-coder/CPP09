@@ -6,7 +6,7 @@
 #    By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 10:24:30 by TheTerror         #+#    #+#              #
-#    Updated: 2024/03/01 19:37:47 by TheTerror        ###   ########lyon.fr    #
+#    Updated: 2024/03/15 15:36:08 by TheTerror        ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CPPFLAGS =			-std=c++98
 CFLAGS=				$(CPPFLAGS) -Wall -Werror -Wextra -g3
 RM =				rm -rf
 
-SRC = main.cpp PmergeMe.cpp
+SRC = main.cpp PmergeMe.cpp PmergeMeWithVector.cpp PmergeMeWithList.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJ_PATH)%.o)
 

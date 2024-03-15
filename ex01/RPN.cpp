@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:38:02 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/03/13 19:47:37 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/14 13:42:25 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ bool	RPN::calculate(const std::string& expr)
 		vars.expr = expr;
 		Libftpp::replaceBySpace(vars.expr);
 		Libftpp::trimSpaces(vars.expr);
-		vars.sstream.str(expr);
+		vars.sstream.str(vars.expr);
 		if (!calculate_op(vars))
 			return (false);
 		if (vars.__stack.size() != 1)
